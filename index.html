@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClatsCraft — A Minecraft server for the Clatskanie community</title>
+<meta name="description" content="ClatsCraft is a student-run Minecraft server for the Clatskanie community. Build, explore, and make friends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark" aria-hidden="true"></span>
+      ClatsCraft
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#rules">Rules</a>
+      <a href="#news">News</a>
+      <a href="#apply">Apply</a>
+    </nav>
+    <a href="#apply" class="btn btn-primary btn-small">Join the server</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Java Edition &middot; Whitelisted &middot; Student-run</p>
+        <h1>A block-sized piece of Clatskanie, online.</h1>
+        <p class="hero-sub">A survival-multiplayer server built by students, for the friends and community around Clatskanie. No teams, no drama — just building, exploring, and hanging out.</p>
+        <div class="hero-actions">
+          <a href="#apply" class="btn btn-primary">Apply to join</a>
+          <a href="#discord" class="btn btn-ghost">Join our Discord</a>
+        </div>
+      </div>
+
+      <div class="status-card" id="status-card" aria-live="polite">
+        <div class="status-card-head">
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-label" id="status-label">Checking status…</span>
+        </div>
+        <div class="status-motd" id="status-motd">ClatsCraft</div>
+        <dl class="status-grid">
+          <div>
+            <dt>Address</dt>
+            <dd id="status-ip">—</dd>
+          </div>
+          <div>
+            <dt>Players</dt>
+            <dd id="status-players">—</dd>
+          </div>
+          <div>
+            <dt>Version</dt>
+            <dd id="status-version">—</dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <p class="eyebrow">What this is</p>
+      <h2>Built by students, kept casual on purpose.</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-index">01</span>
+          <h3>Survival, together</h3>
+          <p>Classic SMP rules — build a base, team up or go solo, trade with other players. No pay-to-win, no ranks to buy.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-index">02</span>
+          <h3>Local, mostly</h3>
+          <p>Made for Clatskanie students and friends first. If you know someone on the server, you're already halfway in.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-index">03</span>
+          <h3>Growing over time</h3>
+          <p>New plugins, events, and features get added as we go. Follow the Discord to catch updates before they land.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RULES PREVIEW -->
+  <section id="rules" class="section section-alt">
+    <div class="section-inner">
+      <p class="eyebrow">Before you join</p>
+      <h2>The short version of the rules.</h2>
+      <ul class="rules-list">
+        <li><span class="rule-tag">Respect</span> Be decent to other players. Harassment, hate speech, and targeted bullying get you removed.</li>
+        <li><span class="rule-tag">Build</span> Don't grief or steal from other players' builds or chests.</li>
+        <li><span class="rule-tag">Play fair</span> No cheat clients, X-ray, or exploiting bugs for an advantage.</li>
+        <li><span class="rule-tag">Keep it clean</span> No NSFW builds, symbols, or usernames.</li>
+      </ul>
+      <p class="rules-note">Full rules and consequences are posted in Discord and in-game at <code>/rules</code>.</p>
+    </div>
+  </section>
+
+  <!-- NEWS -->
+  <section id="news" class="section">
+    <div class="section-inner">
+      <p class="eyebrow">What's new</p>
+      <h2>Latest from the server.</h2>
+      <div class="news-grid">
+        <article class="news-card">
+          <p class="news-date">Coming soon</p>
+          <h3>Server launch</h3>
+          <p>Applications open and the world spawns for the first time. Details posted here and in Discord.</p>
+        </article>
+        <article class="news-card">
+          <p class="news-date">Planned</p>
+          <h3>First plugin pass</h3>
+          <p>Economy and land-claim plugins are being tested before rollout.</p>
+        </article>
+        <article class="news-card">
+          <p class="news-date">Planned</p>
+          <h3>Community build event</h3>
+          <p>A first group build event once we've got enough players in.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCORD -->
+  <section id="discord" class="section section-alt">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow">Stay connected</p>
+      <h2>The Discord is where things actually happen.</h2>
+      <p class="section-lead">Announcements, applications, and most of the community chat all live here. Join first if you're not sure about anything else.</p>
+      <div class="discord-embed-wrap">
+        <!-- TODO: replace with your real Discord server ID for a live widget:
+             <iframe src="https://discord.com/widget?id=YOUR_SERVER_ID&theme=dark"
+                     width="100%" height="400" frameborder="0"
+                     sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe> -->
+        <div class="discord-placeholder">
+          <p>Discord widget goes here once the server ID is added.</p>
+        </div>
+      </div>
+      <a href="#" class="btn btn-primary">Join our Discord</a>
+    </div>
+  </section>
+
+  <!-- APPLY -->
+  <section id="apply" class="section apply-section">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow">Ready?</p>
+      <h2>Apply to join ClatsCraft.</h2>
+      <p class="section-lead">The whitelist form isn't wired up yet — for now, ping us in Discord and we'll get you set up.</p>
+      <a href="#discord" class="btn btn-primary">Go to Discord</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-brand">ClatsCraft</p>
+    <p class="footer-disclaimer">
+      ClatsCraft is an independent, community-run Minecraft server created by students. It is not affiliated with, endorsed by, or sponsored by the Clatskanie School District (including Clatskanie Elementary School), the City of Clatskanie, the State of Oregon, or any government agency.
+    </p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
