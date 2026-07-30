@@ -21,8 +21,7 @@ mainNav.querySelectorAll('a').forEach((link) => {
 // Docs: https://api.mcsrvstat.us
 // ============================================
 
-// TODO: replace with your real server address (IP or domain), e.g. "play.clatskanie.net"
-const SERVER_ADDRESS = 'play.clatskanie.craft';
+const SERVER_ADDRESS = 'clatscraft.minehut.gg';
 
 const statusDot = document.getElementById('status-dot');
 const statusLabel = document.getElementById('status-label');
