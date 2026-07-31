@@ -455,6 +455,10 @@ code {
   margin: 0;
 }
 
+.form-field[hidden] {
+  display: none;
+}
+
 .form-field label,
 .form-field legend {
   font-size: 0.88rem;
