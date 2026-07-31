@@ -62,3 +62,72 @@ async function fetchServerStatus() {
 }
 
 fetchServerStatus();
+
+// ============================================
+// Apply form: Discord/email toggle + submission
+// ============================================
+const applyForm = document.getElementById('apply-form');
+const discordField = document.getElementById('discord-field');
+const emailField = document.getElementById('email-field');
+const hasDiscordRadios = document.querySelectorAll('input[name="hasDiscord"]');
+const formStatus = document.getElementById('form-status');
+const submitBtn = document.getElementById('apply-submit');
+
+hasDiscordRadios.forEach((radio) => {
+  radio.addEventListener('change', (e) => {
+    if (e.target.value === 'yes') {
+      discordField.hidden = false;
+      emailField.hidden = true;
+    } else {
+      discordField.hidden = true;
+      emailField.hidden = false;
+    }
+  });
+});
+
+applyForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  formStatus.textContent = '';
+  formStatus.className = 'form-status';
+
+  const minecraftUsername = document.getElementById('minecraft-username').value.trim();
+  if (!minecraftUsername) {
+    formStatus.textContent = 'Minecraft username is required.';
+    formStatus.className = 'form-status error';
+    return;
+  }
+
+  const hasDiscord = document.querySelector('input[name="hasDiscord"]:checked').value === 'yes';
+  const discordUsername = document.getElementById('discord-username').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const heardFrom = document.getElementById('heard-from').value.trim();
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Submitting…';
+
+  try {
+    const res = await fetch('/api/apply', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ minecraftUsername, hasDiscord, discordUsername, email, heardFrom }),
+    });
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      formStatus.textContent = "Application sent! We'll be in touch.";
+      formStatus.className = 'form-status success';
+      applyForm.reset();
+      discordField.hidden = false;
+      emailField.hidden = true;
+    } else {
+      formStatus.textContent = data.error || 'Something went wrong, try again later.';
+      formStatus.className = 'form-status error';
+    }
+  } catch (err) {
+    formStatus.textContent = 'Could not reach the server, check your connection and try again.';
+    formStatus.className = 'form-status error';
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Submit application';
+  }
+});
