@@ -69,19 +69,21 @@ fetchServerStatus();
 const applyForm = document.getElementById('apply-form');
 const discordField = document.getElementById('discord-field');
 const emailField = document.getElementById('email-field');
-const hasDiscordRadios = document.querySelectorAll('input[name="hasDiscord"]');
+const otherField = document.getElementById('other-field');
+const contactRadios = document.querySelectorAll('input[name="contactMethod"]');
 const formStatus = document.getElementById('form-status');
 const submitBtn = document.getElementById('apply-submit');
 
-hasDiscordRadios.forEach((radio) => {
+const contactFieldsByValue = {
+  discord: discordField,
+  email: emailField,
+  other: otherField,
+};
+
+contactRadios.forEach((radio) => {
   radio.addEventListener('change', (e) => {
-    if (e.target.value === 'yes') {
-      discordField.hidden = false;
-      emailField.hidden = true;
-    } else {
-      discordField.hidden = true;
-      emailField.hidden = false;
-    }
+    Object.values(contactFieldsByValue).forEach((field) => { field.hidden = true; });
+    contactFieldsByValue[e.target.value].hidden = false;
   });
 });
 
@@ -97,9 +99,10 @@ applyForm.addEventListener('submit', async (e) => {
     return;
   }
 
-  const hasDiscord = document.querySelector('input[name="hasDiscord"]:checked').value === 'yes';
+  const contactMethod = document.querySelector('input[name="contactMethod"]:checked').value;
   const discordUsername = document.getElementById('discord-username').value.trim();
   const email = document.getElementById('email').value.trim();
+  const otherContact = document.getElementById('other-contact').value.trim();
   const heardFrom = document.getElementById('heard-from').value.trim();
 
   submitBtn.disabled = true;
@@ -109,7 +112,7 @@ applyForm.addEventListener('submit', async (e) => {
     const res = await fetch('/api/apply', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ minecraftUsername, hasDiscord, discordUsername, email, heardFrom }),
+      body: JSON.stringify({ minecraftUsername, contactMethod, discordUsername, email, otherContact, heardFrom }),
     });
     const data = await res.json();
 
@@ -117,8 +120,8 @@ applyForm.addEventListener('submit', async (e) => {
       formStatus.textContent = "Application sent! We'll be in touch.";
       formStatus.className = 'form-status success';
       applyForm.reset();
+      Object.values(contactFieldsByValue).forEach((field) => { field.hidden = true; });
       discordField.hidden = false;
-      emailField.hidden = true;
     } else {
       formStatus.textContent = data.error || 'Something went wrong, try again later.';
       formStatus.className = 'form-status error';
