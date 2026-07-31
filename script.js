@@ -64,6 +64,44 @@ async function fetchServerStatus() {
 fetchServerStatus();
 
 // ============================================
+// Discord live stats via the public widget API
+// Requires "Enable Server Widget" turned on in Discord's
+// Server Settings → Engagement → Widget
+// ============================================
+const DISCORD_SERVER_ID = '1532535962549223444';
+
+const discordCountEl = document.getElementById('discord-online-count');
+const discordLabelEl = document.getElementById('discord-stats-label');
+
+async function fetchDiscordStats() {
+  try {
+    const res = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
+    if (!res.ok) throw new Error('Discord widget API request failed');
+    const data = await res.json();
+
+    const onlineCount = data.presence_count ?? 0;
+    const inVoice = Array.isArray(data.members) ? data.members.length : 0;
+
+    discordCountEl.textContent = onlineCount;
+
+    if (onlineCount === 0) {
+      discordLabelEl.textContent = "Be the first one online today — hop in and say hey.";
+    } else if (inVoice > 0) {
+      discordLabelEl.textContent = `${onlineCount} online right now, and ${inVoice} ${inVoice === 1 ? 'person is' : 'people are'} already hanging out in voice.`;
+    } else if (onlineCount === 1) {
+      discordLabelEl.textContent = "1 person is online right now — go say hi.";
+    } else {
+      discordLabelEl.textContent = `${onlineCount} people are online right now — come hang out.`;
+    }
+  } catch (err) {
+    discordCountEl.textContent = '—';
+    discordLabelEl.textContent = "Join the community and see who's around.";
+  }
+}
+
+fetchDiscordStats();
+
+// ============================================
 // Apply form: Discord/email toggle + submission
 // ============================================
 const applyForm = document.getElementById('apply-form');
