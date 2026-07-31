@@ -1,4 +1,3 @@
-
 // This runs on Vercel's servers, not in the browser — so the webhook URL
 // stays private (set as an environment variable, never in client-side code).
 
@@ -13,7 +12,7 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server is not configured yet' });
   }
 
-  const { minecraftUsername, hasDiscord, discordUsername, email, heardFrom } = req.body || {};
+  const { minecraftUsername, contactMethod, discordUsername, email, otherContact, heardFrom } = req.body || {};
 
   // Basic validation — Minecraft username is the only required field
   if (!minecraftUsername || typeof minecraftUsername !== 'string' || !minecraftUsername.trim()) {
@@ -25,10 +24,12 @@ export default async function handler(req, res) {
     { name: 'Minecraft Username', value: minecraftUsername.trim(), inline: true },
   ];
 
-  if (hasDiscord && discordUsername) {
+  if (contactMethod === 'discord' && discordUsername) {
     fields.push({ name: 'Discord Username', value: discordUsername.trim(), inline: true });
-  } else if (email) {
+  } else if (contactMethod === 'email' && email) {
     fields.push({ name: 'Email', value: email.trim(), inline: true });
+  } else if (contactMethod === 'other' && otherContact) {
+    fields.push({ name: 'Other Contact', value: otherContact.trim(), inline: true });
   }
 
   if (heardFrom && heardFrom.trim()) {
