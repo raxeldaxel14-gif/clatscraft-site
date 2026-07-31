@@ -419,6 +419,69 @@ code {
   text-align: left;
 }
 
+.apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+  max-width: 440px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.form-field label,
+.form-field legend {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text);
+  padding: 0;
+}
+
+.required { color: var(--amber); }
+.optional { color: var(--text-faint); font-weight: 400; }
+
+.form-field input[type="text"],
+.form-field input[type="email"] {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.7rem 0.9rem;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+}
+.form-field input[type="text"]:focus,
+.form-field input[type="email"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.toggle-group {
+  display: flex;
+  gap: 1.5rem;
+}
+.toggle-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 400 !important;
+  cursor: pointer;
+}
+.toggle-option input { accent-color: var(--accent); }
+
+.form-status {
+  font-size: 0.88rem;
+  min-height: 1.2em;
+}
+.form-status.success { color: var(--accent); }
+.form-status.error { color: #E85A4A; }
+
 /* ============================================
    Footer
    ============================================ */
