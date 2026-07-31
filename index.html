@@ -174,15 +174,19 @@
         </div>
 
         <fieldset class="form-field">
-          <legend>Do you have Discord?</legend>
+          <legend>How can we reach you?</legend>
           <div class="toggle-group">
             <label class="toggle-option">
-              <input type="radio" name="hasDiscord" value="yes" checked>
-              Yes
+              <input type="radio" name="contactMethod" value="discord" checked>
+              Discord
             </label>
             <label class="toggle-option">
-              <input type="radio" name="hasDiscord" value="no">
-              No
+              <input type="radio" name="contactMethod" value="email">
+              Email
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="contactMethod" value="other">
+              Other
             </label>
           </div>
         </fieldset>
@@ -195,6 +199,11 @@
         <div class="form-field" id="email-field" hidden>
           <label for="email">Email address</label>
           <input type="email" id="email" name="email" autocomplete="off">
+        </div>
+
+        <div class="form-field" id="other-field" hidden>
+          <label for="other-contact">Phone number, Instagram, Snapchat, etc.</label>
+          <input type="text" id="other-contact" name="otherContact" autocomplete="off">
         </div>
 
         <div class="form-field">
