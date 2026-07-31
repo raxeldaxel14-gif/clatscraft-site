@@ -1,174 +1,233 @@
-// ============================================
-// Mobile nav toggle
-// ============================================
-const navToggle = document.querySelector('.nav-toggle');
-const mainNav = document.querySelector('.main-nav');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ClatsCraft — A Minecraft server for the Clatskanie community</title>
+<meta name="description" content="ClatsCraft is a student-run Minecraft server for the Clatskanie community. Build, explore, and make friends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-navToggle.addEventListener('click', () => {
-  const isOpen = mainNav.classList.toggle('open');
-  navToggle.setAttribute('aria-expanded', String(isOpen));
-});
+<div class="noise-overlay" aria-hidden="true"></div>
 
-mainNav.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    mainNav.classList.remove('open');
-    navToggle.setAttribute('aria-expanded', 'false');
-  });
-});
+<header class="site-header">
+  <div class="header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-mark" aria-hidden="true"></span>
+      ClatsCraft
+    </a>
+    <nav class="main-nav" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#rules">Rules</a>
+      <a href="#news">News</a>
+      <a href="#apply">Apply</a>
+    </nav>
+    <a href="#apply" class="btn btn-primary btn-small">Join the server</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
 
-// ============================================
-// Live server status via mcsrvstat.us (free, no API key needed)
-// Docs: https://api.mcsrvstat.us
-// ============================================
+<main id="top">
 
-const SERVER_ADDRESS = 'clatscraft.minehut.gg';
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Java Edition &middot; Whitelisted &middot; Student-run</p>
+        <h1>A block-sized piece of Clatskanie, online.</h1>
+        <p class="hero-sub">A survival-multiplayer server built by students, for the friends and community around Clatskanie. No teams, no drama — just building, exploring, and hanging out.</p>
+        <div class="hero-actions">
+          <a href="#apply" class="btn btn-primary">Apply to join</a>
+          <a href="#discord" class="btn btn-ghost">Join our Discord</a>
+        </div>
+      </div>
 
-const statusDot = document.getElementById('status-dot');
-const statusLabel = document.getElementById('status-label');
-const statusMotd = document.getElementById('status-motd');
-const statusIp = document.getElementById('status-ip');
-const statusPlayers = document.getElementById('status-players');
-const statusVersion = document.getElementById('status-version');
+      <div class="status-card" id="status-card" aria-live="polite">
+        <div class="status-card-head">
+          <span class="status-dot" id="status-dot"></span>
+          <span class="status-label" id="status-label">Checking status…</span>
+        </div>
+        <div class="status-motd" id="status-motd">ClatsCraft</div>
+        <dl class="status-grid">
+          <div>
+            <dt>Address</dt>
+            <dd id="status-ip">—</dd>
+          </div>
+          <div>
+            <dt>Players</dt>
+            <dd id="status-players">—</dd>
+          </div>
+          <div>
+            <dt>Version</dt>
+            <dd id="status-version">—</dd>
+          </div>
+        </dl>
+        <div class="status-bedrock">
+          <span class="status-bedrock-label">Bedrock (mobile/Windows)</span>
+          <span class="status-bedrock-address">clatscraft.bedrock.minehut.gg</span>
+        </div>
+      </div>
+    </div>
+  </section>
 
-async function fetchServerStatus() {
-  try {
-    const res = await fetch(`https://api.mcsrvstat.us/3/${SERVER_ADDRESS}`);
-    if (!res.ok) throw new Error('Status API request failed');
-    const data = await res.json();
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="section-inner">
+      <p class="eyebrow">What this is</p>
+      <h2>Built by students, played by students.</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <span class="feature-index">01</span>
+          <h3>Survival, together</h3>
+          <p>Classic SMP rules — build a base, team up or go solo, trade with other players. No pay-to-win, no ranks to buy.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-index">02</span>
+          <h3>Local, mostly</h3>
+          <p>Made for Clatskanie students and friends first. If you know someone on the server, you're already halfway in.</p>
+        </div>
+        <div class="feature-card">
+          <span class="feature-index">03</span>
+          <h3>Growing over time</h3>
+          <p>New plugins, events, and features get added as we go. Follow the Discord to catch updates before they land.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    if (data.online) {
-      statusDot.classList.add('online');
-      statusLabel.textContent = 'Online';
-      statusMotd.textContent = data.motd?.clean?.[0] || 'ClatsCraft';
-      statusIp.textContent = SERVER_ADDRESS;
-      statusPlayers.textContent = `${data.players?.online ?? 0} / ${data.players?.max ?? '?'}`;
-      statusVersion.textContent = data.version || '—';
-    } else {
-      statusDot.classList.add('offline');
-      statusLabel.textContent = 'Offline';
-      statusMotd.textContent = 'ClatsCraft';
-      statusIp.textContent = SERVER_ADDRESS;
-      statusPlayers.textContent = '—';
-      statusVersion.textContent = '—';
-    }
-  } catch (err) {
-    // Server address not set up yet, or the request failed — fail quietly with a clear label
-    statusLabel.textContent = 'Status unavailable';
-    statusMotd.textContent = 'ClatsCraft';
-    statusIp.textContent = SERVER_ADDRESS;
-    statusPlayers.textContent = '—';
-    statusVersion.textContent = '—';
-  }
-}
+  <!-- RULES PREVIEW -->
+  <section id="rules" class="section section-alt">
+    <div class="section-inner">
+      <p class="eyebrow">Before you join</p>
+      <h2>The short version of the rules.</h2>
+      <ul class="rules-list">
+        <li><span class="rule-tag">Respect</span> Be decent to other players. Harassment, hate speech, and targeted bullying get you removed.</li>
+        <li><span class="rule-tag">Build</span> Don't grief or steal from other players' builds or chests.</li>
+        <li><span class="rule-tag">Play fair</span> No cheat clients, X-ray, or exploiting bugs for an advantage.</li>
+        <li><span class="rule-tag">Keep it clean</span> No NSFW builds, symbols, or usernames.</li>
+      </ul>
+      <p class="rules-note">Full rules and consequences are posted in Discord and in-game at <code>/rules</code>.</p>
+    </div>
+  </section>
 
-fetchServerStatus();
+  <!-- NEWS -->
+  <section id="news" class="section">
+    <div class="section-inner">
+      <p class="eyebrow">What's new</p>
+      <h2>Latest from the server.</h2>
+      <div class="news-grid">
+        <article class="news-card">
+          <p class="news-date">Coming soon</p>
+          <h3>Server launch</h3>
+          <p>Applications open and the world spawns for the first time. Details posted here and in Discord.</p>
+        </article>
+        <article class="news-card">
+          <p class="news-date">Planned</p>
+          <h3>First plugin pass</h3>
+          <p>Economy and land-claim plugins are being tested before rollout.</p>
+        </article>
+        <article class="news-card">
+          <p class="news-date">Planned</p>
+          <h3>Community build event</h3>
+          <p>A first group build event once we've got enough players in.</p>
+        </article>
+      </div>
+    </div>
+  </section>
 
-// ============================================
-// Discord live stats via the public widget API
-// Requires "Enable Server Widget" turned on in Discord's
-// Server Settings → Engagement → Widget
-// ============================================
-const DISCORD_SERVER_ID = '1532535962549223444';
+  <!-- DISCORD -->
+  <section id="discord" class="section section-alt">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow">Stay connected</p>
+      <h2>The Discord is where things actually happen.</h2>
+      <p class="section-lead">Announcements, applications, and most of the community chat all live here. Join first if you're not sure about anything else.</p>
+      <div class="discord-stats" id="discord-stats">
+        <div class="discord-stats-top">
+          <span class="discord-pulse-dot" id="discord-pulse-dot"></span>
+          <div class="discord-stats-number" id="discord-online-count">—</div>
+        </div>
+        <p class="discord-stats-label" id="discord-stats-label">Checking who's around…</p>
+        <div class="discord-avatars" id="discord-avatars" hidden></div>
+      </div>
+      <a href="https://discord.gg/X5YKAnEdAa" class="btn btn-primary" target="_blank" rel="noopener">Join our Discord</a>
+    </div>
+  </section>
 
-const discordCountEl = document.getElementById('discord-online-count');
-const discordLabelEl = document.getElementById('discord-stats-label');
+  <!-- APPLY -->
+  <section id="apply" class="section apply-section">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow">Ready?</p>
+      <h2>Apply to join ClatsCraft.</h2>
+      <p class="section-lead">Fill this out and we'll review it. Most replies happen in Discord, so join if you can.</p>
 
-async function fetchDiscordStats() {
-  try {
-    const res = await fetch(`https://discord.com/api/guilds/${DISCORD_SERVER_ID}/widget.json`);
-    if (!res.ok) throw new Error('Discord widget API request failed');
-    const data = await res.json();
+      <form id="apply-form" class="apply-form" novalidate>
+        <div class="form-field">
+          <label for="minecraft-username">Minecraft username <span class="required">*</span></label>
+          <input type="text" id="minecraft-username" name="minecraftUsername" required autocomplete="off">
+        </div>
 
-    const onlineCount = data.presence_count ?? 0;
-    const inVoice = Array.isArray(data.members) ? data.members.length : 0;
+        <fieldset class="form-field">
+          <legend>How can we reach you?</legend>
+          <div class="toggle-group">
+            <label class="toggle-option">
+              <input type="radio" name="contactMethod" value="discord" checked>
+              Discord
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="contactMethod" value="email">
+              Email
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="contactMethod" value="other">
+              Other
+            </label>
+          </div>
+        </fieldset>
 
-    discordCountEl.textContent = onlineCount;
+        <div class="form-field" id="discord-field">
+          <label for="discord-username">Discord username</label>
+          <input type="text" id="discord-username" name="discordUsername" autocomplete="off">
+        </div>
 
-    if (onlineCount === 0) {
-      discordLabelEl.textContent = "Be the first one online today — hop in and say hey.";
-    } else if (inVoice > 0) {
-      discordLabelEl.textContent = `${onlineCount} online right now, and ${inVoice} ${inVoice === 1 ? 'person is' : 'people are'} already hanging out in voice.`;
-    } else if (onlineCount === 1) {
-      discordLabelEl.textContent = "1 person is online right now — go say hi.";
-    } else {
-      discordLabelEl.textContent = `${onlineCount} people are online right now — come hang out.`;
-    }
-  } catch (err) {
-    discordCountEl.textContent = '—';
-    discordLabelEl.textContent = "Join the community and see who's around.";
-  }
-}
+        <div class="form-field" id="email-field" hidden>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="off">
+        </div>
 
-fetchDiscordStats();
+        <div class="form-field" id="other-field" hidden>
+          <label for="other-contact">Phone number, Instagram, Snapchat, etc.</label>
+          <p class="field-hint">Please say which one it is — e.g. "Instagram: @yourhandle" or "Snapchat: yourusername".</p>
+          <input type="text" id="other-contact" name="otherContact" autocomplete="off" placeholder="e.g. Instagram: @yourhandle">
+        </div>
 
-// ============================================
-// Apply form: Discord/email toggle + submission
-// ============================================
-const applyForm = document.getElementById('apply-form');
-const discordField = document.getElementById('discord-field');
-const emailField = document.getElementById('email-field');
-const otherField = document.getElementById('other-field');
-const contactRadios = document.querySelectorAll('input[name="contactMethod"]');
-const formStatus = document.getElementById('form-status');
-const submitBtn = document.getElementById('apply-submit');
+        <div class="form-field">
+          <label for="heard-from">How'd you hear about us? <span class="optional">(optional)</span></label>
+          <input type="text" id="heard-from" name="heardFrom" autocomplete="off">
+        </div>
 
-const contactFieldsByValue = {
-  discord: discordField,
-  email: emailField,
-  other: otherField,
-};
+        <button type="submit" class="btn btn-primary" id="apply-submit">Submit application</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
 
-contactRadios.forEach((radio) => {
-  radio.addEventListener('change', (e) => {
-    Object.values(contactFieldsByValue).forEach((field) => { field.hidden = true; });
-    contactFieldsByValue[e.target.value].hidden = false;
-  });
-});
+</main>
 
-applyForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  formStatus.textContent = '';
-  formStatus.className = 'form-status';
+<footer class="site-footer">
+  <div class="footer-inner">
+    <p class="footer-brand">ClatsCraft</p>
+    <p class="footer-disclaimer">
+      ClatsCraft is an independent, community-run Minecraft server created by students. It is not affiliated with, endorsed by, or sponsored by the Clatskanie School District (including Clatskanie Elementary School), the City of Clatskanie, the State of Oregon, or any government agency.
+    </p>
+  </div>
+</footer>
 
-  const minecraftUsername = document.getElementById('minecraft-username').value.trim();
-  if (!minecraftUsername) {
-    formStatus.textContent = 'Minecraft username is required.';
-    formStatus.className = 'form-status error';
-    return;
-  }
-
-  const contactMethod = document.querySelector('input[name="contactMethod"]:checked').value;
-  const discordUsername = document.getElementById('discord-username').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const otherContact = document.getElementById('other-contact').value.trim();
-  const heardFrom = document.getElementById('heard-from').value.trim();
-
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting…';
-
-  try {
-    const res = await fetch('/api/apply', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ minecraftUsername, contactMethod, discordUsername, email, otherContact, heardFrom }),
-    });
-    const data = await res.json();
-
-    if (res.ok && data.success) {
-      formStatus.textContent = "Application sent! We'll be in touch.";
-      formStatus.className = 'form-status success';
-      applyForm.reset();
-      Object.values(contactFieldsByValue).forEach((field) => { field.hidden = true; });
-      discordField.hidden = false;
-    } else {
-      formStatus.textContent = data.error || 'Something went wrong, try again later.';
-      formStatus.className = 'form-status error';
-    }
-  } catch (err) {
-    formStatus.textContent = 'Could not reach the server, check your connection and try again.';
-    formStatus.className = 'form-status error';
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Submit application';
-  }
-});
+<script src="script.js"></script>
+</body>
+</html>
