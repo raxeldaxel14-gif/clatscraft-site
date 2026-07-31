@@ -161,8 +161,46 @@
     <div class="section-inner section-inner-narrow">
       <p class="eyebrow">Ready?</p>
       <h2>Apply to join ClatsCraft.</h2>
-      <p class="section-lead">The whitelist form isn't wired up yet — for now, ping us in Discord and we'll get you set up.</p>
-      <a href="#discord" class="btn btn-primary">Go to Discord</a>
+      <p class="section-lead">Fill this out and we'll review it. Most replies happen in Discord, so join if you can.</p>
+
+      <form id="apply-form" class="apply-form" novalidate>
+        <div class="form-field">
+          <label for="minecraft-username">Minecraft username <span class="required">*</span></label>
+          <input type="text" id="minecraft-username" name="minecraftUsername" required autocomplete="off">
+        </div>
+
+        <fieldset class="form-field">
+          <legend>Do you have Discord?</legend>
+          <div class="toggle-group">
+            <label class="toggle-option">
+              <input type="radio" name="hasDiscord" value="yes" checked>
+              Yes
+            </label>
+            <label class="toggle-option">
+              <input type="radio" name="hasDiscord" value="no">
+              No
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="form-field" id="discord-field">
+          <label for="discord-username">Discord username</label>
+          <input type="text" id="discord-username" name="discordUsername" autocomplete="off">
+        </div>
+
+        <div class="form-field" id="email-field" hidden>
+          <label for="email">Email address</label>
+          <input type="email" id="email" name="email" autocomplete="off">
+        </div>
+
+        <div class="form-field">
+          <label for="heard-from">How'd you hear about us? <span class="optional">(optional)</span></label>
+          <input type="text" id="heard-from" name="heardFrom" autocomplete="off">
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="apply-submit">Submit application</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </form>
     </div>
   </section>
 
