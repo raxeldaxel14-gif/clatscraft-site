@@ -422,6 +422,12 @@ code {
 /* Discord */
 .discord-embed-wrap {
   margin-bottom: 1.75rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.discord-embed-wrap iframe {
+  display: block;
 }
 .discord-placeholder {
   background: var(--surface);
