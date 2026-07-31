@@ -284,6 +284,26 @@ code {
   word-break: break-word;
 }
 
+.status-bedrock {
+  margin-top: 1.1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.status-bedrock-label {
+  font-size: 0.7rem;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.status-bedrock-address {
+  font-size: 0.85rem;
+  color: var(--amber);
+  word-break: break-word;
+}
+
 /* ============================================
    Sections
    ============================================ */
